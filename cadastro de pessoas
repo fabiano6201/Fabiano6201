@@ -1,0 +1,100 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#include <time.h>
+
+
+struct calcData
+{
+    int idade(int dia,int mes,int ano)
+    {
+        int vrIdade,incremento;
+        struct tm *data_hora_atual;
+        time_t segundos;
+        time(&segundos);
+        data_hora_atual = localtime(&segundos);
+
+        //printf("\nDia..........: %d\n", data_hora_atual->tm_mday);
+        //printf("\nMes..........: %d\n", data_hora_atual->tm_mon+1);
+        //printf("\nAno..........: %d\n\n", data_hora_atual->tm_year+1900);
+
+        int diaAtual=data_hora_atual->tm_mday;
+        int mesAtual=data_hora_atual->tm_mon+1;
+        int anoAtual=data_hora_atual->tm_year+1900;
+
+        incremento = 0;
+        if(diaAtual>=dia && mesAtual>=mes)
+        {
+            incremento=1;
+        }
+        printf("%d anos ",anoAtual-ano+incremento);
+        return 0;
+    }
+};
+
+struct Cliente
+{
+    char nome[12];
+    int dia,mes,ano;
+    char sexo[2];
+
+    void cadCliente()
+    {
+        printf("Digite o nome: ");
+        scanf(" %[^\n]",nome);
+        printf("Digite o dia de nascimento: ");
+        scanf("%d",&dia);
+        printf("Digite o mes de nascimento: ");
+        scanf("%d",&mes);
+        printf("Digite o ano de nascimento: ");
+        scanf("%d",&ano);
+        calcData _idade();
+        printf("Digite o sexo: ");
+        scanf(" %[^\n]",&sexo);
+    }
+
+    void lerCliente()
+    {
+        calcData anos;
+        printf("\nNome: %s  ",nome);
+        anos.idade(dia,mes,ano);
+        printf("Sexo: %s\n",sexo);
+    }
+};
+
+int main()
+{
+    struct tm *data_hora_atual;
+    time_t segundos;
+    time(&segundos);
+    data_hora_atual = localtime(&segundos);
+    Cliente cad[3];
+
+    int item;
+    int n,cont=0;
+    n=50;
+
+    printf("\n\tEscolha um opcao do menu\n\n");
+
+    for(int i=0; i<n; ++i)
+    {
+        printf("\n1 - Cadastrar cliente");
+        printf("\n2 - Listar clientes\n");
+        scanf("%d",&item);
+
+        if(item==1)
+        {
+            cad[i].cadCliente();
+            cont=cont+1;
+        }
+        else
+        {
+            for(int j=0; j<cont; ++j)
+            {
+                cad[j].lerCliente();
+            }
+            break;
+        }
+    }
+    return 0;
+}
